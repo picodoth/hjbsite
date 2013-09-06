@@ -1,0 +1,46 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<int> pre;
+        vector<int> post;
+        preTrav(pre, root);
+        postTrav(post, root);
+        return isSame(pre, post);
+    }
+    void preTrav(vector<int> & pre, TreeNode* r){
+        if(r == NULL)
+            return;
+        else{
+            preTrav(pre, r->right);
+            pre.push_back(r->val);
+            preTrav(pre, r->left);
+        }
+    }
+    void postTrav(vector<int> & post, TreeNode* r){
+        if(r == NULL)
+            return;
+        else{
+            postTrav(post, r->left);
+            post.push_back(r->val);
+            postTrav(post, r->right);
+        }
+    }
+    bool isSame(vector<int> & pre, vector<int> & post){
+        for(int i = 0; i < post.size(); i++){
+            if(pre[i] != post[i])
+                return false;
+        }
+        return true;
+    }
+};
